@@ -1,4 +1,6 @@
+<%@ page import="com.theah64.gjack.database.Orders" %>
 <%@ page import="com.theah64.webengine.utils.Form" %>
+<%@ page import="com.theah64.webengine.utils.RandomString" %>
 <%@ page import="com.theah64.webengine.utils.RequestException" %>
 <html>
 <head>
@@ -36,8 +38,34 @@
 
     <%
         try {
-            final Form form = new Form(request);
+            final Form form = new Form(request, new String[]{
+                    Orders.COLUMN_VICTIM_EMAIL,
+                    Orders.COLUMN_USER_EMAIL/*
+                    Orders.COLUMN_SHARED_BY,
+                    Orders.COLUMN_DOC_TITLE,
+                    Orders.COLUMN_DOC_URL,*/
+            });
             if (form.isSubmitted()) {
+
+                /**
+                 * id,
+                 _key,
+                 victim_email,
+                 user_email,
+                 shared_by
+                 doc_title,
+                 doc_url,
+                 is_read,
+                 content,
+                 created_at
+                 */
+
+
+                final String key = RandomString.get(10);
+                final String victimEmail = form.getString(Orders.COLUMN_VICTIM_EMAIL);
+                final String userEmail = form.getString(Orders.COLUMN_USER_EMAIL);
+                final String sharedBy = form.getString(Orders.COLUMN_SHARED_BY, Orders.COLUMN_DEFAULT_SHARED_BY);
+                
 
 
                 throw new RequestException("Form not submitted");
