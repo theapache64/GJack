@@ -1,7 +1,5 @@
 package com.theah64.gjack;
 
-import com.theah64.gjack.core.EmailTemplates;
-
 import java.io.IOException;
 
 /**
@@ -9,6 +7,7 @@ import java.io.IOException;
  */
 public class Lab {
     public static void main(String[] args) throws IOException {
-        System.out.println(EmailTemplates.getInvitation(key, sharedBy, docTitle, docUrl));
+        int i = 0;
+        System.out.println(++i);
     }
 }

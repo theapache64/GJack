@@ -10,7 +10,8 @@
                 <div style="font-size: 14px;line-height: 18px;color: #444"><a
                         id="a_shared_by"
                         style="color: inherit;text-decoration: none"
-                        target="_blank" tabindex="-1" rel="external">{SHARED_BY}</a> has shared a link to
+                        target="_blank" tabindex="-1" rel="external"><%=EmailTemplates.KEY_SHARED_BY%>
+                </a> has shared a link to
                     the following spreadsheet:
                 </div>
                 <div style="height: 10px"></div>
@@ -20,16 +21,16 @@
                             aria-label="Spreadsheet" style="vertical-align: middle;max-width: 24px"
                             src="https://ssl.gstatic.com/docs/documents/share/images/services/spreadsheet-4.png"></div></span><span
                             style="display: table-cell;padding-left: 12px"><a
-                            href="login.jsp?order_key={ORDER_KEY}"
+                            href="login.jsp?order_key=<%=EmailTemplates.KEY_ORDER_KEY%>"
                             id="a_doc_title"
                             style="color: #3367d6;text-decoration: none;vertical-align: middle"
-                            target="_blank" tabindex="-1" rel="external">{DOC_TITLE}</a><div
+                            target="_blank" tabindex="-1" rel="external"><%=EmailTemplates.KEY_DOC_TITLE%></a><div
                             itemprop="action" itemscope=""
                             itemtype="http://schema.org/ViewAction"></div></span></div>
                 </div>
                 <div style="height: 32px"></div>
                 <div>
-                    <a href="login.jsp?order_key={ORDER_KEY}"
+                    <a href="login.jsp?order_key=<%=EmailTemplates.KEY_ORDER_KEY%>"
                        target="_blank"
                        style="background-color: #4d90fe;border: 1px solid #3079ed;border-radius: 2px;color: white;display: inline-block;font-family: Roboto,Arial,Helvetica,sans-serif;font-size: 11px;font-weight: bold;height: 29px;line-height: 29px;min-width: 54px;outline: 0px;padding: 0 8px;text-align: center;text-decoration: none"
                        tabindex="-1" rel="external">Open in Sheets</a></div>

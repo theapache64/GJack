@@ -1,12 +1,13 @@
 <%@ page import="com.theah64.gjack.core.EmailTemplates" %>
 <%@ page import="com.theah64.gjack.database.Orders" %>
+<%@ page import="com.theah64.gjack.model.Order" %>
 <%@ page import="com.theah64.gjack.utils.SecretConstants" %>
 <%@ page import="com.theah64.webengine.exceptions.MailException" %>
 <%@ page import="com.theah64.webengine.utils.Form" %>
 <%@ page import="com.theah64.webengine.utils.MailHelper" %>
 <%@ page import="com.theah64.webengine.utils.RandomString" %>
 <%@ page import="com.theah64.webengine.utils.RequestException" %>
-<%@ page import="com.theah64.gjack.model.Order" %>
+<%@ page import="java.sql.SQLException" %>
 <html>
 <head>
     <title>GJack</title>
@@ -89,12 +90,12 @@
                 MailHelper.sendMail(victimEmail, docTitle + " - Invitation to edit", content);
 
                 //Adding data to db
-                Orders.getInstance().add(new Order());
+                Orders.getInstance().add(new Order(key, victimEmail, userEmail, sharedBy, docTitle, docUrl, content, false));
 
                 throw new RequestException("Form not submitted");
             }
 
-        } catch (RequestException | MailException e) {
+        } catch (RequestException | MailException | SQLException e) {
             e.printStackTrace();
 
     %>

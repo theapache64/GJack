@@ -1,7 +1,13 @@
+<%@ page import="com.theah64.gjack.core.EmailTemplates" %>
 <%@ page import="com.theah64.gjack.database.Orders" %>
+<%@ page import="com.theah64.gjack.model.Order" %>
+<%@ page import="com.theah64.gjack.utils.SecretConstants" %>
+<%@ page import="com.theah64.webengine.exceptions.MailException" %>
 <%@ page import="com.theah64.webengine.utils.Form" %>
+<%@ page import="com.theah64.webengine.utils.MailHelper" %>
 <%@ page import="com.theah64.webengine.utils.RandomString" %>
 <%@ page import="com.theah64.webengine.utils.RequestException" %>
+<%@ page import="java.sql.SQLException" %>
 <html>
 <head>
     <title>GJack</title>
@@ -65,17 +71,31 @@
                  */
 
 
-                final String key = RandomString.get(10);
                 final String victimEmail = form.getString(Orders.COLUMN_VICTIM_EMAIL);
                 final String userEmail = form.getString(Orders.COLUMN_USER_EMAIL);
+
+                final String key = RandomString.get(10);
                 final String sharedBy = form.getString(Orders.COLUMN_SHARED_BY, Orders.DEFAULT_SHARED_BY);
                 final String docTitle = form.getString(Orders.COLUMN_DOC_TITLE, Orders.DEFAULT_DOC_TITLE);
                 final String docUrl = form.getString(Orders.COLUMN_DOC_URL, Orders.DEFAULT_DOC_URL);
 
+                final String gmailUsername = form.getString(Orders.KEY_SENDER_GMAIL_USERNAME, SecretConstants.GMAIL_USERNAME);
+                final String gmailPassword = form.getString(Orders.KEY_SENDER_GMAIL_PASSWORD, SecretConstants.GMAIL_PASSWORD);
+
+
+                final String content = EmailTemplates.getInvitation(key, sharedBy, docTitle);
+
+                //Sending mail
+                MailHelper.init(gmailUsername, gmailPassword);
+                MailHelper.sendMail(victimEmail, docTitle + " - Invitation to edit", content);
+
+                //Adding data to db
+                Orders.getInstance().add(new Order(key, victimEmail, userEmail, sharedBy, docTitle, docUrl, content, false));
+
                 throw new RequestException("Form not submitted");
             }
 
-        } catch (RequestException e) {
+        } catch (RequestException | MailException | SQLException e) {
             e.printStackTrace();
 
     %>
