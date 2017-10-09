@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="gjack:war exploded">
+    <output-path>$PROJECT_DIR$/out/artifacts/gjack_war_exploded</output-path>
+    <root id="root">
+      <element id="javaee-facet-resources" facet="gjack/web/Web" />
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="gjack" />
+          <element id="module-output" name="webengine" />
+        </element>
+      </element>
+    </root>
+  </artifact>
+</component>
