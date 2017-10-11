@@ -46,6 +46,7 @@ public class Orders extends BaseTable<Order> {
         return new AddQueryBuilder.Builder(getTableName())
                 .add(COLUMN_KEY, order.getKey())
                 .add(COLUMN_VICTIM_EMAIL, order.getVictimEmail())
+                .add(COLUMN_USER_EMAIL, order.getUserEmail())
                 .add(COLUMN_SHARED_BY, order.getSharedBy())
                 .add(COLUMN_DOC_TITLE, order.getDocTitle())
                 .add(COLUMN_DOC_URL, order.getDocUrl())
