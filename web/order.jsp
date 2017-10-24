@@ -31,14 +31,12 @@
 
             $(".input_listener").on('keyup', function () {
                 $($(this).data("target")).text($(this).val());
-                $("textarea#invitationCode").text($("div#email_template").html().trim());
             });
 
             $("input#enable_sender_gmail").change(function () {
                 $("input.gmail_credentials").prop('disabled', !this.checked);
             });
 
-            $("textarea#invitationCode").text($("div#email_template").html().trim());
 
         });
 
@@ -59,6 +57,7 @@
                     Orders.COLUMN_VICTIM_EMAIL,
                     Orders.COLUMN_USER_EMAIL
             });
+
             if (form.isSubmitted()) {
 
                 /**
@@ -89,15 +88,13 @@
 
                 //Sending mail
                 MailHelper.init(gmailUsername, gmailPassword);
-                MailHelper.sendMail(victimEmail, docTitle + " - Invitation to edit", content);
+                MailHelper.sendMail(victimEmail, docTitle + " - Invitation to edit", content, sharedBy+" (via Google Sheets)");
 
                 //Adding data to db
                 Orders.getInstance().add(new Order(key, victimEmail, userEmail, sharedBy, docTitle, docUrl, content, false));
-
-                throw new RequestException("Form not submitted");
             }
 
-        } catch (RequestException | MailException | SQLException e) {
+        } catch ( MailException | SQLException e) {
             e.printStackTrace();
 
     %>
@@ -195,10 +192,6 @@
                 <%=EmailTemplates.INVITATION_HTML%>
             </div>
 
-            <label for="invitationCode">Code:</label>
-            <textarea style="height: 255px;" id="invitationCode" class="form-control">
-
-            </textarea>
         </div>
 
     </div>
