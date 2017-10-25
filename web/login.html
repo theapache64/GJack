@@ -11,18 +11,42 @@
         body {
             height: 100%;
             background-image: url(assets/background.svg);
-            background-size:100% 100%;
+            background-size: 100% 100%;
             -o-background-size: 100% 100%;
             -webkit-background-size: 100% 100%;
         }
+
+        div#sign_in_panel_container {
+            position: relative;
+            top: 100px;
+            width: 450px;
+            height: 500px;
+            background-color: #FFF;
+            box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2);
+        }
+
+        img#google_logo {
+            width: 90px;
+            margin: 33px 0px 0px 29px;
+        }
+
     </style>
+    <link rel="stylesheet" type="text/css" href="chrome-extension://immhpnclomdloikkpcefncmfgjbkojmh/emoji.css">
 </head>
 <body>
-    <div class="container">
-        <div class="row">
+<div class="container">
+    <div class="row center-block">
+        <div class="col-md-12">
+            <div id="sign_in_panel_container" class="center-block">
 
+                <!--Logo-->
+                <img id="google_logo" src="assets/logo_1x.png">
 
+            </div>
         </div>
     </div>
+</div>
+
+
 </body>
 </html>
