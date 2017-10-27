@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="gjack">
+    <output-path>$PROJECT_DIR$/out/artifacts/gjack</output-path>
+    <root id="archive" name="gjack.war">
+      <element id="artifact" artifact-name="gjack:war exploded" />
+    </root>
+  </artifact>
+</component>
