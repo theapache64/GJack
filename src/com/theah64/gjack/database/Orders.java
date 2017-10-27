@@ -27,7 +27,7 @@ public class Orders extends BaseTable<Order> {
     public static final java.lang.String KEY_SENDER_GMAIL_PASSWORD = "sender_gmail_password";
     public static final String COLUMN_KEY = "_key";
     private static final String COLUMN_CONTENT = "content";
-    private static final String COLUMN_IS_READ = "is_read";
+    public static final String COLUMN_IS_READ = "is_read";
 
     private Orders() {
         super("orders");

