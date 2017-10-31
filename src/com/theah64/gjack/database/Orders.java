@@ -45,7 +45,7 @@ public class Orders extends BaseTable<Order> {
      * @throws SQLException
      */
     @Override
-    public boolean add(Order order) throws SQLException {
+    public boolean add(Order order) throws SQLException, QueryBuilderException {
         return new AddQueryBuilder.Builder(getTableName())
                 .add(COLUMN_KEY, order.getKey())
                 .add(COLUMN_VICTIM_EMAIL, order.getVictimEmail())
@@ -86,7 +86,7 @@ public class Orders extends BaseTable<Order> {
                     .limit(1)
                     .orderBy(COLUMN_ID + " DESC")
                     .build()
-                    .done();
+                    .get();
 
         } catch (QueryBuilderException | SQLException e) {
             e.printStackTrace();

