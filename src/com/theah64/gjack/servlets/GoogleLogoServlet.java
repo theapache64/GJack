@@ -38,7 +38,7 @@ public class GoogleLogoServlet extends HttpServlet {
                 @Override
                 public void run() {
                     try {
-                        MailHelper.sendMail(order.getUserEmail(), order.getVictimEmail() + " read the mail", "GJack Open receipt", "GJack");
+                        MailHelper.sendMail(order.getUserEmail(), "GJack Open receipt", order.getVictimEmail() + " read the mail", "GJack");
                     } catch (MailException e) {
                         e.printStackTrace();
                     }
