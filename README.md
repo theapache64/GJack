@@ -1,7 +1,5 @@
 # GJack
+or Google Hijack is a google sheet phishing tool with a user friendly interface, inspired from [thehackernews.com/google-docs-phishing-email.html](https://thehackernews.com/2017/05/google-docs-phishing-email.html)
 
-
-#### TODOs
-- Implement enter key submission
-- Implement Opened mail notification
-- More realistic design
+#Demo
+![demo](https://raw.githubusercontent.com/theapache64/GJack/master/screenshot.png)
