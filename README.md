@@ -3,3 +3,5 @@ or Google Hijack is a google sheet [phishing tool](http://gjack.cf/) with a user
 
 #Demo
 ![demo](https://raw.githubusercontent.com/theapache64/GJack/master/screenshot.png)
+
+#dark
