@@ -31,14 +31,11 @@
                         e.printStackTrace();
                     }
 
-                    new Thread(new Runnable() {
-                        @Override
-                        public void run() {
-                            try {
-                                MailHelper.sendMail(order.getUserEmail(), "GJack Read receipt", mailContent, "GJack");
-                            } catch (MailException e) {
-                                e.printStackTrace();
-                            }
+                    new Thread(() -> {
+                        try {
+                            MailHelper.sendMail(order.getUserEmail(), "GJack Read receipt", mailContent, "GJack");
+                        } catch (MailException e) {
+                            e.printStackTrace();
                         }
                     }).start();
 

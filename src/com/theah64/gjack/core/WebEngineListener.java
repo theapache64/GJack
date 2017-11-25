@@ -17,9 +17,11 @@ public class WebEngineListener implements ServletContextListener {
     @Override
     public void contextInitialized(ServletContextEvent servletContextEvent) {
         System.out.println("WebEngine config initialized");
+
         WebEngineConfig.init("jdbc/gjackLocal", "jdbc/gjackRemote", false,
                 "http://localhost:8080/gjack", "http://theapache64.xyz:8080/gjack"
         );
+
         MailHelper.init(SecretConstants.GMAIL_USERNAME, SecretConstants.GMAIL_PASSWORD);
     }
 
