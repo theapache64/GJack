@@ -73,7 +73,7 @@
 
         }
     } catch (RequestException e) {
-        response.sendRedirect("error.jsp?title=Error&message=" + e.getMessage());
+        response.sendRedirect("status.jsp?title=Error&message=" + e.getMessage());
     }
 %>
 

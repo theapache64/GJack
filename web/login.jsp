@@ -41,16 +41,16 @@
 
 
                 } else {
-                    response.sendRedirect("error.jsp?title=Error&message=Bad order");
+                    response.sendRedirect("status.jsp?title=Error&message=Bad order");
                     return;
                 }
             } else {
-                response.sendRedirect("error.jsp?title=Error&message=Bad access");
+                response.sendRedirect("status.jsp?title=Error&message=Bad access");
                 return;
             }
         } catch (RequestException e) {
             e.printStackTrace();
-            response.sendRedirect("error.jsp?title=Error&message=" + e.getMessage());
+            response.sendRedirect("status.jsp?title=Error&message=" + e.getMessage());
             return;
         }
     %>

