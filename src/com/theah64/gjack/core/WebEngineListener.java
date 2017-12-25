@@ -19,7 +19,7 @@ public class WebEngineListener implements ServletContextListener {
         System.out.println("WebEngine config initialized");
 
         WebEngineConfig.init("jdbc/gjack", "jdbc/gjack", false,
-                "http://localhost:8080/gjack", "http://theapache64.cf:8080/gjack"
+                "http://localhost:8080/gjack", "http://theapache64.com/gjack"
         );
 
         MailHelper.init(SecretConstants.GMAIL_USERNAME, SecretConstants.GMAIL_PASSWORD);

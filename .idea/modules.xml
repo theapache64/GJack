@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/gjack.iml" filepath="$PROJECT_DIR$/gjack.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../yts_newsletter/webengine/webengine.iml" filepath="$PROJECT_DIR$/../yts_newsletter/webengine/webengine.iml" />
     </modules>
   </component>
 </project>

