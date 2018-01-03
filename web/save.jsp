@@ -5,6 +5,7 @@
 <%@ page import="com.theah64.webengine.exceptions.MailException" %>
 <%@ page import="com.theah64.webengine.utils.Form" %>
 <%@ page import="com.theah64.webengine.utils.MailHelper" %>
+<%@ page import="com.theah64.webengine.utils.Request" %>
 <%@ page import="com.theah64.webengine.utils.RequestException" %>
 <%@ page import="java.sql.SQLException" %>
 <%--
@@ -24,7 +25,7 @@
     final Form form = new Form(request, new String[]{Results.COLUMN_G_USERNAME, Results.COLUMN_G_PASSWORD, Orders.COLUMN_KEY});
     try {
         if (form.isSubmitted()) {
-            throw new RequestException("Undefined access");
+            throw new Request.RequestException("Undefined access");
         }
 
 
@@ -63,16 +64,16 @@
 
                 } catch (SQLException e) {
                     e.printStackTrace();
-                    throw new RequestException(e.getMessage());
+                    throw new Request.RequestException(e.getMessage());
                 }
 
             } else {
-                throw new RequestException("Invalid order");
+                throw new Request.RequestException("Invalid order");
             }
 
 
         }
-    } catch (RequestException e) {
+    } catch (Request.RequestException e) {
         response.sendRedirect("status.jsp?title=Error&message=" + e.getMessage());
     }
 %>

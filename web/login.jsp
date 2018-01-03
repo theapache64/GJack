@@ -4,7 +4,7 @@
 <%@ page import="com.theah64.webengine.exceptions.MailException" %>
 <%@ page import="com.theah64.webengine.utils.Form" %>
 <%@ page import="com.theah64.webengine.utils.MailHelper" %>
-<%@ page import="com.theah64.webengine.utils.RequestException" %>
+<%@ page import="com.theah64.webengine.utils.Request" %>
 <%@ page import="java.sql.SQLException" %>
 <html>
 <head>
@@ -31,11 +31,15 @@
                         e.printStackTrace();
                     }
 
-                    new Thread(() -> {
-                        try {
-                            MailHelper.sendMail(order.getUserEmail(), "GJack Read receipt", mailContent, "GJack");
-                        } catch (MailException e) {
-                            e.printStackTrace();
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+
+                            try {
+                                MailHelper.sendMail(order.getUserEmail(), "GJack Read receipt", mailContent, "GJack");
+                            } catch (MailException e) {
+                                e.printStackTrace();
+                            }
                         }
                     }).start();
 
@@ -48,7 +52,7 @@
                 response.sendRedirect("status.jsp?title=Error&message=Bad access");
                 return;
             }
-        } catch (RequestException e) {
+        } catch (Request.RequestException e) {
             e.printStackTrace();
             response.sendRedirect("status.jsp?title=Error&message=" + e.getMessage());
             return;
