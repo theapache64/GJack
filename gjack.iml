@@ -20,5 +20,6 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="webengine" />
+    <orderEntry type="library" name="jmsm" level="application" />
   </component>
 </module>
